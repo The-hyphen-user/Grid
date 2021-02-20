@@ -3,6 +3,8 @@
 //started feb 16 2021
 
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Scanner;
 import java.util.Random;
 
@@ -33,23 +35,57 @@ public class GridMain01 {//push push baby
 
 
         //Print(Grid);
-        //int[][] bombLocations = new int[rows][columns];
-        Button[][] Grid = PlantBombs(rows, columns, bombs);
-        Print(Grid);
-        CalculateAdjacent(Grid);
-        Print(Grid);
+        //int[][] bombLocations = new int[rows][columns];//not used
+        //Button[][] Grid = PlantBombs(rows, columns, bombs);
+        //Print(Grid);
+        //CalculateAdjacent(Grid);
+        //Print(Grid);
 
+
+        /*
         int boardWidth = 1000;
         int boardHeight = 1000;
         Board mainBoard = new Board(boardWidth,boardHeight, "Title goes here");
         Button temp = new Button("press");
         Button temp2 = new Button(false, 0);
-        mainBoard.getContentPane().add(temp);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+
+        JLabel label = new JLabel();
+
+
+        label.add(temp);
+        label.add(temp2);
+
+        panel.add(label);
+
+        mainBoard.add(panel);
+
+        mainBoard.setVisible(true);
+        //mainBoard.getContentPane().add(temp);
         //mainBoard.getContentPane().add(temp2);
 
         //temp.setTitle("words");
 
         //mainBoard.addButton(50, 50, temp);
+        */
+
+         Board board = new Board(1000,1000,"Frame title");
+         JPanel p = new JPanel();
+        p.setLayout(new FlowLayout());
+        JLabel l = new JLabel("Label Title");
+        JButton button = new JButton();
+        button.setText("button");
+        p.add(l);
+        p.add(button);
+        board.add(p);
+        board.setSize(1000, 1000);
+        //board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //board.setLocationRelativeTo(null);
+        board.setVisible(true);
+        p.repaint();
+
 
 
 

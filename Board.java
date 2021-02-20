@@ -7,11 +7,13 @@ public class Board extends JFrame{
 
 
 
-    Board(int width, int height,String title){
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(width,height);
-        this.setVisible(true);
-        this.setTitle(title);
+    Board(int newWidth, int newHeight,String newTitle){
+        setTitle(newTitle);
+        setSize(newWidth,newHeight);
+        //setVisible(true);
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
 
