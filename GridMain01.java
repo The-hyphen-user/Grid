@@ -25,7 +25,7 @@ public class GridMain01 {//push push baby
         //int[][] Grid = new int[rows][columns];
         System.out.println();
 
-        System.out.printf("number of bombs? (%d suggested)%n",rows*columns/4);
+        System.out.printf("number of bombs? (%d-%d suggested)%n",rows*columns/6, rows*columns/4);
         //int bombs = in.nextInt();
         int bombs = 6;
 
@@ -38,6 +38,19 @@ public class GridMain01 {//push push baby
         Print(Grid);
         CalculateAdjacent(Grid);
         Print(Grid);
+
+        int boardWidth = 1000;
+        int boardHeight = 1000;
+        Board mainBoard = new Board(boardWidth,boardHeight, "Title goes here");
+        Button temp = new Button("press");
+        Button temp2 = new Button(false, 0);
+        mainBoard.getContentPane().add(temp);
+        //mainBoard.getContentPane().add(temp2);
+
+        //temp.setTitle("words");
+
+        //mainBoard.addButton(50, 50, temp);
+
 
 
 
