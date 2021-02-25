@@ -2,14 +2,29 @@
 //daniel wamsher
 //started feb 16 2021
 
-
+//import java.swing*
 import javax.swing.*;
 import java.awt.*;
 import java.util.Scanner;
 import java.util.Random;
 
-public class GridMain01 {//push push baby
+public class GridMain01 {
+    public static Button[][] Grid;
+
+
     public static void main(String[] args) {
+
+        boolean menuState = true;
+
+        while (menuState){
+            JFrame menu = new JFrame("menu");
+
+menuState = false;
+        }
+
+
+
+
 
         Scanner in = new Scanner(System.in);
 
@@ -17,19 +32,49 @@ public class GridMain01 {//push push baby
         System.out.println("numbers not test corrected");
 
         System.out.println("rows?");
-        int rows = 5;
+        int rows = 16;
         //int rows = in.nextInt();
 
         System.out.println("columns?");
         //int columns = in.nextInt();
-        int columns = 5;
+        int columns = 16;
 
         //int[][] Grid = new int[rows][columns];
         System.out.println();
 
         System.out.printf("number of bombs? (%d-%d suggested)%n",rows*columns/6, rows*columns/4);
         //int bombs = in.nextInt();
-        int bombs = 6;
+        int bombs = 40;
+
+
+
+        //Button[][]
+         Grid = PlantBombs(rows, columns, bombs);
+        CalculateAdjacent(Grid);
+
+        Board mainWindow = new Board(1000,1000,"Mine Field");
+        mainWindow.setLayout(new GridLayout(rows,columns,5,5));
+
+
+
+
+        for (int i=0;i<rows;i++){
+            for (int j = 0;j<columns;j++) {
+                mainWindow.add(Grid[i][j]);
+                //Grid[i][j].setText(Integer.toString(Grid[i][j].nearbyBombCount));
+                //System.out.print("   I:"+i+" J:"+j);
+            }
+            //System.out.println(" ");
+        }
+
+        System.out.println("got here");
+        mainWindow.setVisible(true);
+
+
+
+
+
+
 
 
 
@@ -40,8 +85,6 @@ public class GridMain01 {//push push baby
         //Print(Grid);
         //CalculateAdjacent(Grid);
         //Print(Grid);
-
-
         /*
         int boardWidth = 1000;
         int boardHeight = 1000;
@@ -71,14 +114,22 @@ public class GridMain01 {//push push baby
         //mainBoard.addButton(50, 50, temp);
         */
 
+
+        /*
          Board board = new Board(1000,1000,"Frame title");
          JPanel p = new JPanel();
-        p.setLayout(new FlowLayout());
+        p.setLayout(new GridLayout());
         JLabel l = new JLabel("Label Title");
-        JButton button = new JButton();
+        Button button = new Button();
         button.setText("button");
         p.add(l);
         p.add(button);
+        for (int i =0;i<5;i++){
+            Button b = new Button();
+            b.setText("Button# "+i+1);
+            p.add(b);
+            System.out.print(i);
+        }
         board.add(p);
         board.setSize(1000, 1000);
         //board.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -91,6 +142,62 @@ public class GridMain01 {//push push baby
 
 
 
+checkForZeros(row+1,col);
+
+
+        checkForZeros(row,col-1);
+*/
+
+
+    }//end of main
+
+
+    public static void checkForZeros(int row, int col) {
+        System.out.println("Active threads:" + Thread.activeCount());
+
+
+
+        if (row+1 != Grid.length){
+            if (!Grid[row+1][col].getText().equals("0") && Grid[row+1][col].nearbyBombCount == 0){
+                Grid[row+1][col].setText("0");
+                checkForZeros(row+1,col);
+                //System.out.println("wooooooords");
+                //System.out.println(Grid[row+1][col].getText());
+            }else {
+                Grid[row+1][col].setText(Integer.toString(Grid[row+1][col].nearbyBombCount));
+            }
+        }
+        if (col+1 != Grid[0].length){
+            if (!Grid[row][col+1].getText().equals("0") && Grid[row][col+1].nearbyBombCount == 0){
+                Grid[row][col+1].setText("0");
+                checkForZeros(row,col+1);
+                //System.out.println("wooooooords");
+                //System.out.println(Grid[row][col+1].getText());
+            } else{
+                Grid[row][col+1].setText(Integer.toString(Grid[row][col+1].nearbyBombCount));
+            }
+        }
+        if (col != 0){
+            if (!Grid[row][col-1].getText().equals("0") && Grid[row][col-1].nearbyBombCount == 0){
+                Grid[row][col-1].setText("0");
+                checkForZeros(row,col-1);
+                //System.out.println("wooooooords");
+                //System.out.println(Grid[row][col-1].getText());
+            } else{
+                Grid[row][col-1].setText(Integer.toString(Grid[row][col-1].nearbyBombCount));
+            }
+        }
+        if (row != 0){
+            if (!Grid[row-1][col].getText().equals("0") && Grid[row-1][col].nearbyBombCount == 0){
+                Grid[row-1][col].setText("0");
+                checkForZeros(row-1,col);
+                //System.out.println("wooooooords");
+                //System.out.println(Grid[row-1][col].getText());
+            } else{
+                Grid[row-1][col].setText(Integer.toString(Grid[row-1][col].nearbyBombCount));
+            }
+        }
+        //if (Grid[i+1][j+1] != null && Grid[i+1][j+1].getText().equals("0") && Grid[i][j].nearbyBombCount == 0){}
 
 
     }
@@ -108,48 +215,64 @@ public class GridMain01 {//push push baby
     public static Button[][] PlantBombs(int row, int col, int bombsToBePlanted){
         Button[][] grid = new Button[row][col];
 
-        for (int i=0;i<grid.length-1;i++) {
-            for (int j=0;j<grid[0].length-1;j++) {//go through array
-                grid[i][j] = new Button(false, 0);
+        for (int i=0;i<grid.length;i++) {
+            for (int j=0;j<grid[0].length;j++) {//go through array
+                System.out.print("   I:"+i+" J:"+j);
+                grid[i][j] = new Button(false, 0,i,j);
+                //grid[i][j].setPreferredSize(new Dimension(100, 100));
                 //grid[i][j].printIsBomb();
             }
+            System.out.println(" ");
         }
 
+        if (false){//if bombs<half spaces
+            //make all spots bombs
+            //dig up mines
+        } else {
 
 
-        Random rand = new Random();
-        int bombsPlanted = 0;
-        int rows = grid.length;
-        int columns = grid[0].length;
-        while (bombsPlanted<bombsToBePlanted){
-            int x = rand.nextInt(rows-1);
-            int y = rand.nextInt(columns-1);
-            if(grid[x][y].isBomb == false){
-                grid[x][y].becomeBomb();
-                bombsPlanted++;
+            Random rand = new Random();
+            int bombsPlanted = 0;
+            int rows = grid.length;
+            int columns = grid[0].length;
+            while (bombsPlanted < bombsToBePlanted) {
+                int x =( rand.nextInt(rows));
+                //int y = rand.nextInt(columns);
+                int y =( rand.nextInt(col));
+                if (!grid[x][y].isBomb) {
+                    grid[x][y].becomeBomb();
+                    grid[x][y].nearbyBombCount = -1;
+                    bombsPlanted++;
+                    //System.out.println("bomb planted at:" +x+", "+y);
+                }
+
             }
-
         }
+
 
         return grid;
     }
 
 
 
-    public static Button[][] CalculateAdjacent(Button[][] arr){
+    public static void CalculateAdjacent(Button[][] arr){
 
 
-        for (int i=0;i<arr.length-1;i++) {
-            for (int j=0;j<arr[0].length-1;j++) {//go through grid array
-                if(arr[i][j].isBomb == false) {
+        int row = arr.length;
+        System.out.println("row:"+row);
+        int col = arr[0].length;
+        System.out.println("col:"+col);
+        for (int i=0;i<row;i++) {
+            for (int j=0;j<col;j++) {//go through grid array
+                if(!arr[i][j].isBomb) {
                     int nearbyBombCount = 0;
-                    int row = arr.length;
-                    int col = arr[0].length;
+                    //int row = arr.length;
+                    //int col = arr[0].length;
                     for (int k = i - 1; k < i + 2; k++) {
                         for (int l = j - 1; l < j + 2; l++) {
                             //System.out.println(i +" "+j+" "+row+" "+col);
                             //System.out.println(k+" "+l);
-                                if (k != -1 && l != -1 && k != row-1 && l != col-1) {//if out of bounds, cpu intensive fix when done
+                                if (k != -1 && l != -1 && k != row && l != col) {//if out of bounds, cpu intensive fix when done
 
                                     if (arr[k][l].isBomb) {
                                         nearbyBombCount++;
@@ -160,11 +283,10 @@ public class GridMain01 {//push push baby
                     }
                     //done checking surrounding here
                     arr[i][j].nearbyBombCount = nearbyBombCount;
-                    System.out.println(nearbyBombCount);
+                    //System.out.println(nearbyBombCount);
                 }
             }
         }
-        return arr;
     }
 
 }
