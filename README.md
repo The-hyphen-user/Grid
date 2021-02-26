@@ -13,4 +13,5 @@ things to do:
 implement menu gui that ask for size/bomb count
 still needs to be optimized in a few way
 like generate empty spaces instead of bombs when bombs < 1/2
+add win condition
 
